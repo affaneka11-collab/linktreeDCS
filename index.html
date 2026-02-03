@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Coupler Studio LinkTree</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #555c7d 1%, #484ab6 100%);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 97%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: flex-start;
+            height: 100px;
+        }
+        header div {
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .linktree-container {
+            max-width: 600px;
+            width: 90%; /* Responsif: 90% di layar kecil */
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .linktree-container h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Teks dan gambar di tengah */
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 48px; /* Tinggi minimal untuk mudah diklik di mobile */
+        }
+        .link-item:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .link-item img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+        .dropdown-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Teks dan gambar di tengah */
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            padding: 23px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 48px; /* Tinggi minimal untuk mudah diklik di mobile */
+        }
+        .dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+        .sub-links {
+            display: none;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .sub-links .link-item {
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #bck {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border: 2px solid #000000;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* Media Queries untuk Responsivitas */
+        @media (max-width: 768px) {
+            header {
+                width: 95%; /* Lebih kecil di mobile */
+                padding: 15px;
+                height: auto; /* Tinggi otomatis */
+            }
+            .logo {
+                width: 60px; /* Logo lebih kecil di mobile */
+                height: 60px;
+            }
+            header h1 {
+                font-size: 20px; /* Font lebih kecil */
+            }
+            .linktree-container {
+                width: 95%; /* Lebih lebar di mobile */
+                padding: 20px 10px;
+            }
+            .linktree-container h1 {
+                font-size: 28px; /* Font lebih kecil */
+                margin-bottom: 20px;
+            }
+            .link-item, .dropdown-btn {
+                font-size: 16px; /* Font lebih kecil untuk readability */
+                padding: 12px 15px; /* Padding lebih kecil */
+                min-height: 44px; /* Standar mobile */
+            }
+            .link-item img, .dropdown-btn img {
+                width: 18px; /* Gambar lebih kecil */
+                height: 18px;
+            }
+            .sub-links {
+                padding: 8px; /* Padding lebih kecil */
+            }
+        }
+
+        @media (min-width: 769px) {
+            /* Desktop: Tetap seperti asli, tapi bisa tambah efek jika perlu */
+            .link-item:hover, .dropdown-btn:hover {
+                transform: translateY(-3px); /* Efek hover lebih kuat di desktop */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <img src="img/dcslogo.png" class="logo" alt="Logo">
+        </div>
+    </header>
+    <div class="linktree-container">
+        <h1>Double Coupler Studio LinkTree</h1>
+        <!-- Tombol utama dengan sub-tombol -->
+        <button class="dropdown-btn" onmouseenter="toggleSubLinks('social-links')" onclick="togglehiddenlinktree('social-links')">  
+            <img src="img/social.png" alt=""> Social Media Links
+        </button> <!-- Menambahkan gambar untuk tombol utama, ganti src jika perlu -->
+        <div id="social-links" class="sub-links">
+            <a href="https://discord.gg/twRUf5dxnc" class="link-item" target="_blank">
+                <img src="img/dscrd.png" alt="Discord"> Discord
+            </a>
+            <a href="http://tiktok.com/@doublecouplerofc" class="link-item" target="_blank">
+                <img src="img/tktok.png" alt="Tiktok"> Tiktok
+            </a>
+            <a href="" class="link-item" target="_blank">
+                <img src="img/youtube.png" alt="YouTube"> YouTube
+            </a>
+            <a href="https://chat.whatsapp.com/JhaDm5HrpcQGkekDbIFyN9" class="link-item" target="_blank">
+                <img src="img/wa.png" alt="Whatsapp"> Whatsapp Group
+            </a>
+            <a href="https://whatsapp.com/channel/0029VazTdvg6hENkbRgq2w0q" class="link-item" target="_blank">
+                <img src="img/wa.png" alt="Whatsapp"> Whatsapp Channel
+            </a>
+        </div>
+        <!-- Link lainnya jika diperlukan -->
+        <button class="dropdown-btn" onmouseenter="toggleSubLinks('roblox')" onclick="togglehiddenlinktree('roblox')">
+            <img src="img/roblox.png" alt="Roblox"> Roblox Links
+        </button>
+        <div id="roblox" class="sub-links">
+            <a href="" class="link-item" target="_blank">
+                <img src="img/roblox.png" alt="Inmitra"> Inmitra
+            </a>
+            <a href="" class="link-item" target="_blank">
+                <img src="img/roblox.png" alt="Inmitra"> Nusantara Milenium Railway
+            </a>
+            <a href="" class="link-item" target="_blank">
+                <img src="img/roblox.png" alt="Inmitra"> Game-3
+            </a>
+            <a href="" class="link-item" target="_blank">
+                <img src="img/roblox.png" alt="Inmitra"> Game-4
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        function toggleSubLinks(id, s) {
+            var subLinks = document.getElementById(id);
+            var jenis = document.getElementsByClassName(s);
+            isVisible = true
+            subLinks.style.display = "block";
+
+        }
+        function togglehiddenlinktree(id) {
+            var linktreeContainer = document.getElementById(id);
+            if (isVisible == true) {
+                linktreeContainer.style.display = "none";
+            }else {
+                linktreeContainer.style.display = "block";
+            }
+            isVisible = !isVisible
+        }
+    </script>
+</body>
+</html>
